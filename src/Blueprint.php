@@ -13,9 +13,6 @@ class Blueprint
     protected $inputs = [];
 
 
-
-//    protected $commands = [];
-
     public function __construct($route, \Closure $callback = null)
     {
         $this->route = $route;
@@ -26,7 +23,7 @@ class Blueprint
 
     public function text($name)
     {
-        $this->addInput('text', $name);
+        return $this->addInput('text', $name);
     }
 
     protected function addInput($type, $name, $params = [])
@@ -40,10 +37,10 @@ class Blueprint
          * */
         $this->inputs[]
             = $input
-            = (new InputDefinition(array_merge(
+            = new InputDefinition(array_merge(
                 compact('type', 'name'), $params
             )
-        ))->getInput();
+        );
         return $input;
     }
 

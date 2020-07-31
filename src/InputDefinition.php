@@ -9,15 +9,14 @@ class InputDefinition
 {
     protected $params;
 
-    protected $input;
+//    protected $input = [];
 
     public function __construct($params = [])
     {
         $this->params = $params;
-
     }
 
-    public function getInput()
+    protected function getInput()
     {
         $this->setInput();
         return $this->input;
@@ -25,19 +24,25 @@ class InputDefinition
 
     protected function setInput()
     {
-        $this->input = "<input ";
         foreach ($this->params as $key => $value)
             $this->{$key}($value);
-        $this->input .= ">";
     }
 
     protected function name($name)
     {
-        $this->input .= "name='$name' ";
+        $this->params[] = compact('name');
+    }
+
+    public function id($id = null)
+    {
+        if(is_null($id))
+            $id = $this->params['name'];
+//        $this->params[] = compact('id');
+        $this->params = array_merge($this->params, compact('id'));
     }
 
     protected function type($type)
     {
-        $this->input .= "type='$type' ";
+        $this->params[] = compact('type');
     }
 }
